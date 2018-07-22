@@ -8,8 +8,8 @@ Entry point of the ps4-remote-play program.
 
 import sys
 
-from ps4rp import __version__
 from ps4rp import registry
+from ps4rp import registration
 
 from PySide2 import QtWidgets
 
@@ -38,10 +38,25 @@ class MainWindow(QtWidgets.QWidget):
         self._connect_button.setEnabled(len(registry.get_known_consoles()) > 0)
 
     def _on_register_click(self):
-        QtWidgets.QMessageBox.information(
-            self, 'Hello, World!',
-            'This is ps4-remote-play v%s' % __version__.__version__
+        psn_id, _ = QtWidgets.QInputDialog.getText(
+            self, 'Registration', 'Enter your PSN id:'
         )
+        pin, _ = QtWidgets.QInputDialog.getInt(
+            self, 'Registration', 'Enter the registration PIN:'
+        )
+        info = registration.find_and_pair_console(psn_id, pin)
+        if info is None:
+            QtWidgets.QMessageBox.warning(
+                self, 'Registration failed',
+                'Could not register with the console.'
+            )
+        else:
+            QtWidgets.QMessageBox.information(
+                self, 'Registration successful',
+                'Registered with PS4 %r.' % info.name
+            )
+            registry.register_console(info)
+            self._update_connect_button_state()
 
     def _on_connect_click(self):
         QtWidgets.QMessageBox.warning(
