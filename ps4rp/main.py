@@ -8,6 +8,7 @@ Entry point of the ps4-remote-play program.
 
 import sys
 
+from ps4rp import discovery
 from ps4rp import registry
 from ps4rp import registration
 
@@ -59,10 +60,25 @@ class MainWindow(QtWidgets.QWidget):
             self._update_connect_button_state()
 
     def _on_connect_click(self):
-        QtWidgets.QMessageBox.warning(
-            self, 'Operation unsupported',
-            'Connecting to a console is not yet supported.'
-        )
+        # TODO: Allow selection in the UI.
+        console = registry.get_known_consoles()[0]
+        ip, status = discovery.find_console(console)
+        if status is None:
+            QtWidgets.QMessageBox.warning(
+                self, 'Could not connect',
+                'Console could not be found in time.'
+            )
+            return
+        if status == discovery.ConsoleStatus.ready:
+            QtWidgets.QMessageBox.information(
+                self, 'Console ready!', 'IP: %s' % ip
+            )
+        else:
+            discovery.wake_up(ip, console)
+            QtWidgets.QMessageBox.information(
+                self, 'Console waking up!',
+                'Sent a wakeup command, try again soon.'
+            )
 
 
 def main():
