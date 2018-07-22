@@ -53,5 +53,7 @@ setuptools.setup(
     },
 
     python_requires='>=3.6.0',
-    install_requires=[],
+    install_requires=[
+        'pyside2>=5.11.0',
+    ],
 )
