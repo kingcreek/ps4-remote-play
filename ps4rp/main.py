@@ -29,7 +29,8 @@ class MainWindow(QtWidgets.QWidget):
     def on_button_click(self):
         QtWidgets.QMessageBox.information(
             self, 'Hello, World!',
-            'This is ps4-remote-play v%s' % __version__.__version__)
+            'This is ps4-remote-play v%s' % __version__.__version__
+        )
 
 
 def main():

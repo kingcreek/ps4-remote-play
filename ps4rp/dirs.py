@@ -1,5 +1,3 @@
-#!/usr/bin/env python
-#
 # Copyright (c) 2018, Pierre Bourdon <delroth@gmail.com>
 # SPDX-License-Identifier: Apache-2.0
 """

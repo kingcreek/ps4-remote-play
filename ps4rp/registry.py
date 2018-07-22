@@ -1,5 +1,3 @@
-#!/usr/bin/env python
-#
 # Copyright (c) 2018, Pierre Bourdon <delroth@gmail.com>
 # SPDX-License-Identifier: Apache-2.0
 """
@@ -41,10 +39,12 @@ class PS4Info:
     def dumps(self):
         """Serializes a PS4Info into a bytestring."""
         data = {
-            'name': self.name,
+            'name':
+                self.name,
             'registration_key':
                 binascii.b2a_hex(self.registration_key).decode('ascii'),
-            'rp_key': binascii.b2a_hex(self.rp_key).decode('ascii'),
+            'rp_key':
+                binascii.b2a_hex(self.rp_key).decode('ascii'),
         }
         return json.dumps(data, indent=2).encode('ascii')
 
