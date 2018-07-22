@@ -12,3 +12,10 @@ should be supported.
 
  - Supports the initial registration protocol.
  - Supports local "wake on LAN".
+
+**TODO**:
+
+ - Draw the rest of the f-ing owl :)
+ - Local streaming protocol RE and implementation (video, audio, input).
+ - Remote streaming protocol RE and implementation (video, audio, input).
+ - PSN / OAuth based pairing and remote wakeup.
