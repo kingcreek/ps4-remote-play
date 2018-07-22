@@ -15,8 +15,9 @@ from ps4rp import dirs
 
 
 class PS4Info:
-    def __init__(self, *, name, registration_key, rp_key):
+    def __init__(self, *, name, host_id, registration_key, rp_key):
         self.name = name
+        self.host_id = host_id
         self.registration_key = registration_key
         self.rp_key = rp_key
 
@@ -30,6 +31,7 @@ class PS4Info:
         try:
             return PS4Info(
                 name=data['name'],
+                host_id=binascii.a2b_hex(data['host_id']),
                 registration_key=binascii.a2b_hex(data['registration_key']),
                 rp_key=binascii.a2b_hex(data['rp_key']),
             )
@@ -41,6 +43,8 @@ class PS4Info:
         data = {
             'name':
                 self.name,
+            'host_id':
+                binascii.b2a_hex(self.host_id).decode('ascii'),
             'registration_key':
                 binascii.b2a_hex(self.registration_key).decode('ascii'),
             'rp_key':
@@ -68,10 +72,11 @@ def get_known_consoles():
             continue
         with open(entry, 'rb') as fp:
             console = PS4Info.loads(fp.read())
+            if console is None:
+                continue
             if os.path.basename(entry) != _computed_basename(console):
                 continue
-            if console is not None:
-                consoles.append(console)
+            consoles.append(console)
     return consoles
 
 
@@ -80,8 +85,6 @@ def register_console(console):
         os.mkdir(_registry_dir())
 
     path = os.path.join(_registry_dir(), _computed_basename(console))
-    if os.path.exists(path):
-        raise RuntimeException('Console %r already registered' % console.name)
     with open(path, 'wb') as fp:
         fp.write(console.dumps())
 

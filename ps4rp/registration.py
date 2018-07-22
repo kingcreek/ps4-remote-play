@@ -90,6 +90,7 @@ def find_and_pair_console(psn_id, pin):
     parsed_data = _bytes_to_http_headers(response_data)
     return registry.PS4Info(
         name=parsed_data['PS4-Nickname'],
+        host_id=binascii.a2b_hex(parsed_data['PS4-Mac']),
         registration_key=binascii.a2b_hex(parsed_data['PS4-RegistKey']),
         rp_key=binascii.a2b_hex(parsed_data['RP-Key'])
     )
