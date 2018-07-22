@@ -2,6 +2,9 @@
 #
 # Copyright (c) 2018, Pierre Bourdon <delroth@gmail.com>
 # SPDX-License-Identifier: Apache-2.0
+"""
+Entry point of the ps4-remote-play program.
+"""
 
 import sys
 
