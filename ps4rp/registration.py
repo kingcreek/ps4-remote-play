@@ -1,8 +1,8 @@
 # Copyright (c) 2018, Pierre Bourdon <delroth@gmail.com>
 # SPDX-License-Identifier: Apache-2.0
 """
-The registration module handles the cryptographic operations required to pair a
-PS4 in remote play mode with a client.
+The registration module handles the protocol used to pair a PS4 in remote play
+mode with a client.
 """
 
 import binascii
